@@ -1,0 +1,15 @@
+p {
+    font-family: Bahnschrift, sans-serif;
+}
+
+#total-sales {
+    color: #6bae13;
+}
+
+#total-stock {
+    color: #1a2d8b;
+}
+
+#to-sell {
+    color: #cd0000;
+}
