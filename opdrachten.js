@@ -102,7 +102,7 @@ const brands = document.getElementById("brands");
 
 tvBrands.forEach((tv) => {
     let li = document.createElement("li");
-    li.innerText = tv;
+    li.innerHTML = tv;
     brands.appendChild(li);
 })
 
@@ -110,24 +110,63 @@ tvBrands.forEach((tv) => {
 //*Het is handig om onze scripts als functies op te zetten, zodat we ze gemakkelijk kunnen hergebruiken.
 //*Tip: vergeet deze functie -declaratie niet aan te roepen!
 
-function inventoryLists(arr, prop) {
-    return arr.map(tv => tv[prop]);
+const price = document.getElementById("price");
+const screenType = document.getElementById("screen-type")
+
+function makeListFromProps(arr, prop, ele) {
+    let list = arr.map(tv => tv[prop]);
+    for (let i = 0; i < list.length; i++) {
+        let li = document.createElement("li");
+        li.innerHTML = list[i];
+        ele.appendChild(li);
+    }
 }
 
-const price = document.getElementById("price");
-price.textContent = inventoryLists(inventory, "price");
+makeListFromProps(inventory, "price", price);
+makeListFromProps(inventory, "screenType", screenType);
+
+function makeListFromTwoProps(arr, firstProp, secondProp, ele) {
+    let firstList = arr.map(tv => tv[firstProp]);
+    let secondList = arr.map(tv => tv[secondProp]);
+    for (let i = 0; i < firstList.length; i++) {
+        let li = document.createElement("li");
+        li.innerHTML = firstList[i] + ", " + secondList[i];
+        ele.appendChild(li);
+    }
+}
+
+const priceScreenType = document.getElementById("price-screen-type");
+makeListFromTwoProps(inventory, "price", "screenType", priceScreenType);
+
+
 
 //Opdracht 4a: Zorg ervoor dat er een string wordt gegenereerd voor de naam van een tv.
 // Maak een functie die één enkel tv-object (zoals inventory[0] of inventory[6]) verwacht en de naam op de volgende manier samenvoegt:
 // [merk] [type] - [naam] zoals Philips 43PUS6504/12 - 4K TV of NIKKEI NH3216SMART - HD smart TV.
 // Test of jouw functie ook werkt wanneer er een ander tv object wordt meegegeven.
 
+function lineOneDetails(arr) {
+    let singleTv = arr[5];
+    return `${singleTv.brand} ${singleTv.type} - ${singleTv.name}`;
+}
 
+console.log(lineOneDetails(inventory));
+
+const tvOneName = document.getElementById("single-tv-name");
+tvOneName.innerHTML = lineOneDetails(inventory);
 
 //Opdracht 4b: Zorg ervoor dat de prijs van een tv netjes geformat wordt. Maak een functie die één tv-prijs als parameter verwacht (zoals 379) en daar de volgende string van maakt: €379,-.
 // Test of jouw functie ook werkt wanneer er een andere tv-prijs wordt meegegeven.
 
+function lineTwoDetails(arr) {
+    let singleTv = arr[5];
+    return `€${singleTv.price},-`;
+}
 
+console.log(lineTwoDetails(inventory));
+
+const tvOnePrice = document.getElementById("single-tv-price");
+tvOnePrice.innerHTML = lineTwoDetails(inventory);
 
 //Opdracht 4c: Zorg ervoor dat er een string wordt gegenereerd voor alle beschikbare schermgroottes van één tv, in zowel inches als cm.
 // Doe dit door een functie te schrijven die één screen-sizes array verwacht ( zoals inventory[0].availableSizes) en de groottes op de volgende manier samenvoegt:
@@ -135,13 +174,15 @@ price.textContent = inventoryLists(inventory, "price");
 // Als een tv maar één schermgrootte heeft ([32]) wordt de output 32 inch (81 cm). Wanneer een tv vier schermgroottes heeft ([43, 50, 55, 58]) wordt de output 43 inch (109 cm) | 50 inch (127 cm) | 58 inch (147 cm).
 // Test of jouw functie werkt in alle mogelijke gevallen.
 
-
+// ???
 
 //Opdracht 4d: Zorg ervoor de informatie van één van de tv's zoals het voorbeeld wordt weergegeven op de pagina. Gebruik hiervoor de functies die je hebt gemaakt in opdracht 5a, 5b en 5c.
 
-
+// done
 
 //Opdracht 4e: Schrijf een functie die ALLE tv's weergeeft op de pagina zoals in het voorbeeld.
 // Dit wil je natuurlijk niet acht keer opnieuw schrijven, want nu zijn het 8 tv's, maar in de toekomst misschien wel 200!
 // Gebruik in deze functie de voorgaande functies die je hebt geschreven, om onderdelen van de data te formatten.
 // De overkoepelende "tv-generator-functie" verwacht één parameter: de volledige array met tv-objecten. Vergeet 'm niet aan te roepen!
+
+// geen tijd
