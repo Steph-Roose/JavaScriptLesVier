@@ -146,27 +146,27 @@ makeListFromTwoProps(inventory, "price", "screenType", priceScreenType);
 // Test of jouw functie ook werkt wanneer er een ander tv object wordt meegegeven.
 
 function lineOneDetails(arr) {
-    let singleTv = arr[5];
+    let singleTv = arr[0];
     return `${singleTv.brand} ${singleTv.type} - ${singleTv.name}`;
 }
 
 console.log(lineOneDetails(inventory));
 
-const tvOneName = document.getElementById("single-tv-name");
-tvOneName.innerHTML = lineOneDetails(inventory);
+const singleTvName = document.getElementById("single-tv-name");
+singleTvName.innerHTML = lineOneDetails(inventory);
 
 //Opdracht 4b: Zorg ervoor dat de prijs van een tv netjes geformat wordt. Maak een functie die één tv-prijs als parameter verwacht (zoals 379) en daar de volgende string van maakt: €379,-.
 // Test of jouw functie ook werkt wanneer er een andere tv-prijs wordt meegegeven.
 
 function lineTwoDetails(arr) {
-    let singleTv = arr[5];
+    let singleTv = arr[0];
     return `€${singleTv.price},-`;
 }
 
 console.log(lineTwoDetails(inventory));
 
-const tvOnePrice = document.getElementById("single-tv-price");
-tvOnePrice.innerHTML = lineTwoDetails(inventory);
+const singleTvPrice = document.getElementById("single-tv-price");
+singleTvPrice.innerHTML = lineTwoDetails(inventory);
 
 //Opdracht 4c: Zorg ervoor dat er een string wordt gegenereerd voor alle beschikbare schermgroottes van één tv, in zowel inches als cm.
 // Doe dit door een functie te schrijven die één screen-sizes array verwacht ( zoals inventory[0].availableSizes) en de groottes op de volgende manier samenvoegt:
@@ -174,7 +174,18 @@ tvOnePrice.innerHTML = lineTwoDetails(inventory);
 // Als een tv maar één schermgrootte heeft ([32]) wordt de output 32 inch (81 cm). Wanneer een tv vier schermgroottes heeft ([43, 50, 55, 58]) wordt de output 43 inch (109 cm) | 50 inch (127 cm) | 58 inch (147 cm).
 // Test of jouw functie werkt in alle mogelijke gevallen.
 
-// ???
+function lineThreeDetails(arr) {
+    let singleTv = arr[0];
+    let sizes = singleTv.availableSizes;
+    for (let i = 0; i < sizes.length; i++) {
+        let sizesCm = Math.round(sizes[i] * 2.54);
+        sizes[i] = `${sizes[i]} inch (${sizesCm} cm)`
+    }
+    return sizes.join(" | ");
+}
+
+const singleTvSize = document.getElementById("single-tv-sizes");
+singleTvSize.innerHTML = lineThreeDetails(inventory);
 
 //Opdracht 4d: Zorg ervoor de informatie van één van de tv's zoals het voorbeeld wordt weergegeven op de pagina. Gebruik hiervoor de functies die je hebt gemaakt in opdracht 5a, 5b en 5c.
 
@@ -185,4 +196,57 @@ tvOnePrice.innerHTML = lineTwoDetails(inventory);
 // Gebruik in deze functie de voorgaande functies die je hebt geschreven, om onderdelen van de data te formatten.
 // De overkoepelende "tv-generator-functie" verwacht één parameter: de volledige array met tv-objecten. Vergeet 'm niet aan te roepen!
 
-// geen tijd
+function tvName(arr) {
+    return `${arr.brand} ${arr.type} - ${arr.name}`;
+}
+
+function tvPrice(arr) {
+    return `€${arr.price},-`;
+}
+
+function tvSizes(arr) {
+    let size = arr.availableSizes;
+    for (let i = 0; i < size.length; i++) {
+        let sizeCm = Math.round(size[i] * 2.54);
+        size[i] = `${size[i]} inch (${sizeCm} cm)`
+    }
+    return size.join(" | ");
+}
+
+function tvTable(arr) {
+    const tvs = document.getElementById("tvs");
+    let table = document.createElement("table");
+    let tblBody = document.createElement("tbody");
+
+    let trName = document.createElement("tr");
+    let trNameText = document.createTextNode(tvName(arr));
+    let trPrice = document.createElement("tr");
+    let trPriceText = document.createTextNode(tvPrice(arr));
+    let trSize = document.createElement("tr");
+    let trSizeText = document.createTextNode(tvSizes(arr));
+    let trEmpty = document.createElement("tr");
+    let trEmptyText = document.createTextNode("***");
+
+    trName.appendChild(trNameText);
+    trPrice.appendChild(trPriceText);
+    trSize.appendChild(trSizeText);
+    trEmpty.appendChild(trEmptyText);
+    tblBody.appendChild(trName);
+    tblBody.appendChild(trPrice);
+    tblBody.appendChild(trSize);
+    tblBody.appendChild(trEmpty);
+
+    table.appendChild(tblBody);
+    tvs.appendChild(table);
+
+}
+
+function singleTvs(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        tvTable(arr[i]);
+    }
+}
+
+singleTvs(inventory);
+
+
