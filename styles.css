@@ -1,0 +1,27 @@
+p {
+    font-family: Bahnschrift, sans-serif;
+    font-size: large;
+}
+
+ul {
+    font-family: Bahnschrift, sans-serif;
+    font-size: medium;
+    color: steelblue;
+}
+
+table {
+    font-family: Bahnschrift, sans-serif;
+    font-size: medium;
+}
+
+#total-sales {
+    color: #6bae13;
+}
+
+#total-stock {
+    color: #1a2d8b;
+}
+
+#to-sell {
+    color: #cd0000;
+}
